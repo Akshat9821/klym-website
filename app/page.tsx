@@ -85,7 +85,7 @@ export default function HomePage() {
     <div className="min-h-screen bg-white text-black">
 
       {/* Hero Section - Scroll 1 */}
-<section ref={heroRef} className="relative min-h-screen flex items-start justify-center pt-16 md:pt-24 px-4 overflow-hidden">
+<section ref={heroRef} className="relative min-h-[80vh] md:min-h-screen flex items-start justify-center pt-16 md:pt-24 px-4 overflow-hidden">
         {/* Background Portrait */}
         <div 
           className="absolute inset-0 z-0 hero-bg-image"
