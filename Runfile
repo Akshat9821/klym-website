@@ -1,0 +1,37 @@
+#!/usr/bin/env run shebang
+
+## Development server
+# Start the Next.js development server
+dev:
+	npm run dev
+
+## Production build
+# Build the application for production
+build:
+	npm run build
+
+## Start production server
+# Start the Next.js production server
+start:
+	npm run start
+
+## Linting
+# Run ESLint to check code quality
+lint:
+	npm run lint
+
+## Install dependencies
+# Install all project dependencies
+install:
+	npm install --legacy-peer-deps
+
+## Clean install
+# Clean install of dependencies
+clean-install:
+	rm -rf node_modules package-lock.json
+	npm install --legacy-peer-deps
+
+## Website (default)
+# Start the development server (default command)
+website:
+	npm run dev
