@@ -119,10 +119,10 @@ export default function HomePage() {
           initial={{ opacity: 0, x: -30 }}
           animate={heroInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className="absolute left-16 top-1/2 transform -translate-y-1/2 z-50"
+          className="absolute left-4 top-1/2 transform -translate-y-1/2 md:left-16 md:top-1/2 md:transform md:-translate-y-1/2 z-50"
         >
-          <div className="bg-white/20 backdrop-blur-sm rounded-2xl px-6 py-4">
-            <div className="text-black text-2xl md:text-3xl font-semibold tracking-wider font-['Urbanist'] leading-tight">
+          <div className="bg-white/20 backdrop-blur-sm rounded-2xl px-4 py-3 md:px-6 md:py-4">
+            <div className="text-black text-base sm:text-lg md:text-3xl font-semibold tracking-wider font-['Urbanist'] leading-tight text-center">
               <div>Your Skin,</div>
               <div>Decoded.</div>
             </div>
@@ -134,10 +134,10 @@ export default function HomePage() {
           initial={{ opacity: 0, x: 30 }}
           animate={heroInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 30 }}
           transition={{ duration: 0.8, delay: 0.6 }}
-          className="absolute right-16 top-1/2 transform -translate-y-1/2 z-50"
+          className="absolute right-4 top-1/2 transform -translate-y-1/2 md:right-16 md:top-1/2 md:transform md:-translate-y-1/2 z-50"
         >
-          <div className="bg-white/20 backdrop-blur-sm rounded-2xl px-6 py-4">
-            <div className="text-black text-2xl md:text-3xl font-semibold tracking-wider font-['Urbanist'] leading-tight text-right">
+          <div className="bg-white/20 backdrop-blur-sm rounded-2xl px-4 py-3 md:px-6 md:py-4">
+            <div className="text-black text-base sm:text-lg md:text-3xl font-semibold tracking-wider font-['Urbanist'] leading-tight text-center">
               <div>Your Routine,</div>
               <div>Perfected.</div>
             </div>
@@ -146,7 +146,7 @@ export default function HomePage() {
         
         <div className="relative z-20 container mx-auto max-w-6xl text-white">
           
-          <motion.div
+          	<motion.div
             initial={{ opacity: 0, y: 50 }}
             animate={heroInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
             transition={{ duration: 0.8 }}
@@ -157,7 +157,6 @@ export default function HomePage() {
               better than you do.
             </h2>
           </motion.div>
-          
         </div>
       </section>
 
@@ -336,9 +335,10 @@ export default function HomePage() {
             initial={{ opacity: 0 }}
             animate={section4InView ? { opacity: 1 } : { opacity: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="flex justify-center"
+            className="w-full overflow-x-auto scrollbar-hide"
+            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
           >
-            <div className="flex gap-8 justify-center items-center max-w-5xl mx-auto">
+            <div className="flex gap-4 md:gap-8 justify-start md:justify-center items-center min-w-max pl-[50vw] md:pl-0 pr-4 md:pr-0 md:max-w-5xl md:mx-auto mobile-transform">
                 {[
                   { src: '/splash-screen.jpg', alt: 'Splash Screen' },
                   { src: '/routine-tracker.jpg', alt: 'Routine Tracker' },
@@ -391,13 +391,14 @@ export default function HomePage() {
                         alt={alt}
                         width={280}
                         height={580}
-                        className={`w-full h-full ${
-                          index === 0 ? 'object-cover object-center scale-110' : 
-                          index === 1 ? 'object-cover object-top' : 
-                          index === 2 ? 'object-cover object-center' : 'object-contain'
-                        }`}
-                        style={index === 1 ? { objectPosition: 'center top' } : 
-                               index === 2 ? { objectPosition: 'center center' } : {}}
+                        className={`w-full h-full object-cover`}
+                        style={{ 
+                          objectFit: index === 1 ? 'contain' : 'cover',
+                          transform: index === 1 ? 'scale(1.45) translateY(16%)' : 'none',
+                          transformOrigin: index === 1 ? 'center center' : 'center'
+                        }}
+                        priority={index === 1}
+                        unoptimized
                       />
                     </div>
                     
@@ -476,11 +477,31 @@ export default function HomePage() {
               transition={{ duration: 0.8, delay: 0.6 }}
               className="flex flex-col sm:flex-row gap-6 justify-center items-center"
             >
-              <Button className="flex items-center gap-3 px-8 py-4 bg-[#FF7E7E] hover:bg-[#FF7E7E]/90 text-white text-lg rounded-xl">
-                Download for iOS
+              <Button 
+                asChild
+                className="flex items-center gap-3 px-8 py-4 bg-[#FF7E7E] hover:bg-[#FF7E7E]/90 text-white text-lg rounded-xl"
+              >
+                <a 
+                  href="https://apps.apple.com/in/app/klym/id6748438143" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3"
+                >
+                  Download for iOS
+                </a>
               </Button>
-              <Button className="flex items-center gap-3 px-8 py-4 bg-[#FF7E7E] hover:bg-[#FF7E7E]/90 text-white text-lg rounded-xl">
-                Download on Android
+              <Button 
+                asChild
+                className="flex items-center gap-3 px-8 py-4 bg-[#FF7E7E] hover:bg-[#FF7E7E]/90 text-white text-lg rounded-xl"
+              >
+                <a 
+                  href="https://play.google.com/store/apps/details?id=com.gramai.klym&pcampaignid=web_share" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3"
+                >
+                  Download on Android
+                </a>
               </Button>
             </motion.div>
           </motion.div>
