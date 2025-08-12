@@ -155,12 +155,14 @@ html {
 /* Hero background image responsive sizing */
 @media (max-width: 768px) {
   .hero-bg-image {
-    background-size: 70% !important;
+    background-size: 95% !important;
+    background-position: center bottom !important;
   }
 }
 
 @media (min-width: 769px) {
   .hero-bg-image {
     background-size: 40% !important;
+    background-position: bottom center !important;
   }
 }

@@ -85,7 +85,7 @@ export default function HomePage() {
     <div className="min-h-screen bg-white text-black">
 
       {/* Hero Section - Scroll 1 */}
-<section ref={heroRef} className="relative min-h-[80vh] md:min-h-screen flex items-start justify-center pt-16 md:pt-24 px-4 overflow-hidden">
+<section ref={heroRef} className="relative min-h-screen flex items-start justify-center pt-16 md:pt-24 px-4 overflow-hidden">
         {/* Background Portrait */}
         <div 
           className="absolute inset-0 z-0 hero-bg-image"
@@ -344,33 +344,11 @@ export default function HomePage() {
                   { src: '/routine-tracker.jpg', alt: 'Routine Tracker' },
                   { src: '/home-page.png', alt: 'Home Page' }
                 ].map(({ src, alt }, index) => {
-                  // Animation configurations for each image
-                  const getAnimationProps = () => {
-                    if (index === 0) {
-                      // Left image - slides from center to left
-                      return {
-                        initial: { opacity: 0, x: 0, scale: 0.8 },
-                        animate: section4InView ? { opacity: 1, x: -50, scale: 1 } : { opacity: 0, x: 0, scale: 0.8 }
-                      }
-                    } else if (index === 2) {
-                      // Right image - slides from center to right
-                      return {
-                        initial: { opacity: 0, x: 0, scale: 0.8 },
-                        animate: section4InView ? { opacity: 1, x: 50, scale: 1 } : { opacity: 0, x: 0, scale: 0.8 }
-                      }
-                    } else {
-                      // Center image - stays in place
-                      return {
-                        initial: { opacity: 0, y: 30 },
-                        animate: section4InView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }
-                      }
-                    }
-                  }
-
                   return (
                   <motion.div
                     key={index}
-                    {...getAnimationProps()}
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={section4InView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
                     transition={{ duration: 0.8, delay: 0.2 + (0.15 * index), ease: "easeOut" }}
                     whileHover={{ scale: 1.02, y: -5 }}
                     className="relative bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 rounded-[3rem] p-3 shadow-2xl flex-shrink-0 w-[280px] cursor-pointer"
@@ -394,7 +372,7 @@ export default function HomePage() {
                         className={`w-full h-full object-cover`}
                         style={{ 
                           objectFit: index === 1 ? 'contain' : 'cover',
-                          transform: index === 1 ? 'scale(1.45) translateY(16%)' : 'none',
+                          transform: index === 1 ? 'scale(1.4) translateY(10%)' : 'none',
                           transformOrigin: index === 1 ? 'center center' : 'center'
                         }}
                         priority={index === 1}
@@ -545,7 +523,7 @@ export default function HomePage() {
                       alt="Instagram"
                       width={32}
                       height={32}
-                      className="w-8 h-8"
+                      className="w-6 h-6 md:w-8 md:h-8 object-contain"
                     />
                   </a>
                   <a href="https://www.facebook.com/share/1B9hcPmwwX/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity">
@@ -554,7 +532,7 @@ export default function HomePage() {
                       alt="Facebook"
                       width={32}
                       height={32}
-                      className="w-8 h-8"
+                      className="w-6 h-6 md:w-8 md:h-8 object-contain"
                     />
                   </a>
                   <a href="https://www.linkedin.com/company/klym-life/posts/?feedView=all" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity">
@@ -563,7 +541,7 @@ export default function HomePage() {
                       alt="LinkedIn"
                       width={32}
                       height={32}
-                      className="w-8 h-8"
+                      className="w-6 h-6 md:w-8 md:h-8 object-contain"
                     />
                   </a>
                 </div>
