@@ -141,7 +141,7 @@ export default function HomePage() {
                   className="absolute left-2 top-0"
                 >
                   <div className="bg-white/20 backdrop-blur-sm rounded-2xl px-3 py-2">
-                    <div className="text-black text-base font-semibold tracking-wider font-['Urbanist'] leading-tight text-left">
+                    <div className="text-black text-xs font-semibold tracking-wider font-['Urbanist'] leading-tight text-left">
                       Your Skin, Decoded.
                     </div>
                   </div>
@@ -155,7 +155,7 @@ export default function HomePage() {
                   className="absolute -right-4 top-0"
                 >
                   <div className="bg-white/20 backdrop-blur-sm rounded-2xl px-3 py-2">
-                    <div className="text-black text-base font-semibold tracking-wider font-['Urbanist'] leading-tight text-right">
+                    <div className="text-black text-xs font-semibold tracking-wider font-['Urbanist'] leading-tight text-right">
                       Your Routine, Perfected.
                     </div>
                   </div>
