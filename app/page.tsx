@@ -17,12 +17,13 @@ export default function HomePage() {
   const section5Ref = useRef(null)
 
   const heroInView = useInView(heroRef, { once: true, margin: "-100px" })
+  const heroStillVisible = useInView(heroRef, { once: false, margin: "-50px" })
   const section2InView = useInView(section2Ref, { once: true, margin: "-100px" })
   const section3InView = useInView(section3Ref, { once: true, margin: "-100px" })
   const section4InView = useInView(section4Ref, { once: true, margin: "-100px" })
   const section5InView = useInView(section5Ref, { once: true, margin: "-100px" })
 
-  const [currentChatIndex, setCurrentChatIndex] = useState(0)
+  const [showAllChats, setShowAllChats] = useState(false)
 
   const chatMessages = [
     {
@@ -73,13 +74,13 @@ export default function HomePage() {
   ]
 
   useEffect(() => {
-    if (section3InView && currentChatIndex < chatMessages.length) {
+    if (section3InView) {
       const timer = setTimeout(() => {
-        setCurrentChatIndex((prev) => Math.min(prev + 1, chatMessages.length))
-      }, 2000)
+        setShowAllChats(true)
+      }, 500) // Small delay for smooth transition
       return () => clearTimeout(timer)
     }
-  }, [section3InView, currentChatIndex, chatMessages.length])
+  }, [section3InView])
 
   return (
     <div className="min-h-screen bg-white text-black">
@@ -97,52 +98,23 @@ export default function HomePage() {
           }}
         >
         </div>
-        {/* KLYM Logo - Top Left of Screen */}
+        {/* KLYM Logo - Top Center of Screen */}
         <motion.div
-          initial={{ opacity: 0, x: -50 }}
-          animate={heroInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="fixed top-4 left-4 z-50"
+          initial={{ opacity: 0, y: -30 }}
+          animate={heroInView && heroStillVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: -30 }}
+          transition={{ duration: 0.5 }}
+          className="fixed top-4 left-1/2 transform -translate-x-1/2 -ml-4 sm:-ml-8 z-50"
         >
           <Image
             src="/klym-logo.png"
             alt="KLYM logo"
-            width={80}
-            height={27}
-            className=""
+            width={120}
+            height={40}
+            className="h-10 w-auto sm:h-18"
             priority
           />
         </motion.div>
         
-        {/* YOUR SKIN, DECODED - Left Center */}
-        <motion.div
-          initial={{ opacity: 0, x: -30 }}
-          animate={heroInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className="absolute left-4 top-1/2 transform -translate-y-1/2 md:left-16 md:top-1/2 md:transform md:-translate-y-1/2 z-50"
-        >
-          <div className="bg-white/20 backdrop-blur-sm rounded-2xl px-4 py-3 md:px-6 md:py-4">
-            <div className="text-black text-base sm:text-lg md:text-3xl font-semibold tracking-wider font-['Urbanist'] leading-tight text-center">
-              <div>Your Skin,</div>
-              <div>Decoded.</div>
-            </div>
-          </div>
-        </motion.div>
-        
-        {/* YOUR ROUTINE, PERFECTED - Right Center */}
-        <motion.div
-          initial={{ opacity: 0, x: 30 }}
-          animate={heroInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 30 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          className="absolute right-4 top-1/2 transform -translate-y-1/2 md:right-16 md:top-1/2 md:transform md:-translate-y-1/2 z-50"
-        >
-          <div className="bg-white/20 backdrop-blur-sm rounded-2xl px-4 py-3 md:px-6 md:py-4">
-            <div className="text-black text-base sm:text-lg md:text-3xl font-semibold tracking-wider font-['Urbanist'] leading-tight text-center">
-              <div>Your Routine,</div>
-              <div>Perfected.</div>
-            </div>
-          </div>
-        </motion.div>
         
         <div className="relative z-20 container mx-auto max-w-6xl text-white">
           
@@ -150,12 +122,84 @@ export default function HomePage() {
             initial={{ opacity: 0, y: 50 }}
             animate={heroInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
             transition={{ duration: 0.8 }}
-            className="text-center mt-42 mb-34"
+            className="text-center mt-42 mb-8 ml-4"
           >
-            <h2 className="text-2xl md:text-3xl font-medium leading-tight max-w-3xl mx-auto text-black">
-              AI-powered skincare<br /> that knows you<br />
+            <h2 className="text-2xl md:text-3xl font-medium leading-tight max-w-3xl mx-auto text-black mb-12">
+              AI-powered skincare<br /> that knows you
               better than you do.
             </h2>
+            
+            {/* Side texts positioned below center text */}
+            <div className="relative mt-8 px-4 sm:px-0">
+              {/* Mobile (xs) — pin the badges to left/right so they don't drift */}
+              <div className="block sm:hidden relative">
+                {/* Left badge */}
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={heroInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
+                  transition={{ duration: 0.8, delay: 0.4 }}
+                  className="absolute left-2 top-0"
+                >
+                  <div className="bg-white/20 backdrop-blur-sm rounded-2xl px-3 py-2">
+                    <div className="text-black text-sm font-semibold tracking-wider font-['Urbanist'] leading-tight text-left">
+                      <div>Your Skin,</div>
+                      <div>Decoded.</div>
+                    </div>
+                  </div>
+                </motion.div>
+
+                {/* Right badge */}
+                <motion.div
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={heroInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 20 }}
+                  transition={{ duration: 0.8, delay: 0.6 }}
+                  className="absolute right-2 top-0"
+                >
+                  <div className="bg-white/20 backdrop-blur-sm rounded-2xl px-3 py-2">
+                    <div className="text-black text-sm font-semibold tracking-wider font-['Urbanist'] leading-tight text-right">
+                      <div>Your Routine,</div>
+                      <div>Perfected.</div>
+                    </div>
+                  </div>
+                </motion.div>
+
+                {/* Spacer so the absolute badges don't overlap following content */}
+                <div className="h-20"></div>
+              </div>
+
+              {/* >= sm — keep the original desktop/tablet layout */}
+              <div className="hidden sm:flex justify-between items-stretch gap-8">
+                {/* YOUR SKIN, DECODED - Left aligned */}
+                <motion.div
+                  initial={{ opacity: 0, x: -30 }}
+                  animate={heroInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
+                  transition={{ duration: 0.8, delay: 0.4 }}
+                  className="flex justify-start"
+                >
+                  <div className="bg-white/20 backdrop-blur-sm rounded-2xl px-4 py-3 md:px-6 md:py-4">
+                    <div className="text-black text-base sm:text-lg md:text-xl font-semibold tracking-wider font-['Urbanist'] leading-tight text-left sm:text-center">
+                      <div>Your Skin,</div>
+                      <div>Decoded.</div>
+                    </div>
+                  </div>
+                </motion.div>
+
+                {/* YOUR ROUTINE, PERFECTED - Right aligned */}
+                <motion.div
+                  initial={{ opacity: 0, x: 30 }}
+                  animate={heroInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 30 }}
+                  transition={{ duration: 0.8, delay: 0.6 }}
+                  className="flex justify-end"
+                >
+                  <div className="bg-white/20 backdrop-blur-sm rounded-2xl px-4 py-3 md:px-6 md:py-4">
+                    <div className="text-black text-base sm:text-lg md:text-xl font-semibold tracking-wider font-['Urbanist'] leading-tight text-right sm:text-center">
+                      <div>Your Routine,</div>
+                      <div>Perfected.</div>
+                    </div>
+                  </div>
+                </motion.div>
+              </div>
+            </div>
           </motion.div>
         </div>
       </section>
@@ -169,7 +213,7 @@ export default function HomePage() {
             transition={{ duration: 0.8 }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl md:text-6xl font-bold mb-8">Guessing Games End Here</h2>
+            <h2 className="text-4xl md:text-6xl font-bold mb-8 text-[#FF7E7E]">Guessing Games End Here</h2>
           </motion.div>
 
           <div className="grid lg:grid-cols-2 gap-16 items-center max-w-6xl mx-auto">
@@ -262,13 +306,13 @@ export default function HomePage() {
             transition={{ duration: 0.8 }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl md:text-6xl font-bold">Meet KLYM, Your AI Skincare Expert</h2>
+            <h2 className="text-4xl md:text-6xl font-bold text-[#FF7E7E]">Meet KLYM, Your AI Cosmetologist Expert</h2>
           </motion.div>
 
           <div className="max-w-3xl mx-auto">
             <div className="rounded-3xl p-8 min-h-[600px]">
               <div className="space-y-6">
-                {chatMessages.slice(0, currentChatIndex).map((msg, index) => (
+                {showAllChats && chatMessages.map((msg, index) => (
                   <motion.div
                     key={index}
                     initial={{ opacity: 0, y: 20, scale: 0.95 }}
@@ -290,24 +334,6 @@ export default function HomePage() {
                     </div>
                   </motion.div>
                 ))}
-
-                {currentChatIndex < chatMessages.length && (
-                  <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex justify-start">
-                    <div className="bg-white px-6 py-4 rounded-2xl rounded-bl-md shadow-sm">
-                      <div className="flex space-x-1">
-                        <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" />
-                        <div
-                          className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
-                          style={{ animationDelay: "0.1s" }}
-                        />
-                        <div
-                          className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
-                          style={{ animationDelay: "0.2s" }}
-                        />
-                      </div>
-                    </div>
-                  </motion.div>
-                )}
               </div>
             </div>
           </div>
@@ -323,7 +349,7 @@ export default function HomePage() {
             transition={{ duration: 0.8 }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl md:text-6xl font-bold mb-8">Know Before You Glow</h2>
+            <h2 className="text-4xl md:text-6xl font-bold mb-8 text-[#FF7E7E]">Know Before You Glow</h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
               Understand product compatibility with your skin using KLYM's Fitment Scores. First time in India:
               Transparent, personalized skincare recommendations.
@@ -418,12 +444,12 @@ export default function HomePage() {
             </p>
 
             {/* Trust Indicators */}
-            <div className="flex flex-wrap justify-center gap-12 mb-16">
+            <div className="flex flex-col sm:flex-row sm:flex-wrap justify-center gap-4 sm:gap-12 mb-16">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={section5InView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
-                className="flex items-center gap-3"
+                className="flex items-center justify-center gap-3"
               >
                 <Sparkles className="w-6 h-6 text-[#FF7E7E]" />
                 <span className="text-lg font-semibold">Dermatologist Approved</span>
@@ -432,7 +458,7 @@ export default function HomePage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={section5InView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ duration: 0.6, delay: 0.3 }}
-                className="flex items-center gap-3"
+                className="flex items-center justify-center gap-3"
               >
                 <Sparkles className="w-6 h-6 text-[#FF7E7E]" />
                 <span className="text-lg font-semibold">Privacy Protected</span>
@@ -441,7 +467,7 @@ export default function HomePage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={section5InView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ duration: 0.6, delay: 0.4 }}
-                className="flex items-center gap-3"
+                className="flex items-center justify-center gap-3"
               >
                 <Sparkles className="w-6 h-6 text-[#FF7E7E]" />
                 <span className="text-lg font-semibold">100% Free Analysis</span>
@@ -453,7 +479,7 @@ export default function HomePage() {
               initial={{ opacity: 0, y: 30 }}
               animate={section5InView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
               transition={{ duration: 0.8, delay: 0.6 }}
-              className="flex flex-col sm:flex-row gap-6 justify-center items-center"
+              className="flex flex-row gap-4 sm:gap-6 justify-center items-center flex-wrap"
             >
               <Button 
                 asChild
@@ -489,20 +515,20 @@ export default function HomePage() {
       {/* Footer */}
       <footer className="bg-gray-900 text-white py-16">
         <div className="container mx-auto px-4">
-          <div className="flex flex-wrap justify-center gap-8 mb-8 text-lg">
-            <a href="#" className="hover:text-[#FF7E7E] transition-colors">
+          <div className="flex flex-row flex-wrap justify-center items-center gap-4 sm:gap-8 mb-8 text-lg">
+            <a href="#" className="hover:text-[#FF7E7E] transition-colors text-center">
               About Us
             </a>
-            <Link href="/privacy-policy" className="hover:text-[#FF7E7E] transition-colors">
+            <Link href="/privacy-policy" className="hover:text-[#FF7E7E] transition-colors text-center">
               Privacy Policy
             </Link>
-            <Link href="/terms-of-use" className="hover:text-[#FF7E7E] transition-colors">
+            <Link href="/terms-of-use" className="hover:text-[#FF7E7E] transition-colors text-center">
               Terms of Use
             </Link>
-            <Link href="/user-privacy-choices" className="hover:text-[#FF7E7E] transition-colors">
+            <Link href="/user-privacy-choices" className="hover:text-[#FF7E7E] transition-colors text-center">
               User Privacy Choices
             </Link>
-            <Link href="/support" className="hover:text-[#FF7E7E] transition-colors">
+            <Link href="/support" className="hover:text-[#FF7E7E] transition-colors text-center">
               Support
             </Link>
           </div>

@@ -155,7 +155,7 @@ html {
 /* Hero background image responsive sizing */
 @media (max-width: 768px) {
   .hero-bg-image {
-    background-size: 105% !important;
+    background-size: 140% !important;
     background-position: center bottom !important;
   }
 }
