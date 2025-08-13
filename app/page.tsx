@@ -89,7 +89,7 @@ export default function HomePage() {
 <section ref={heroRef} className="relative min-h-screen flex items-start justify-center pt-16 md:pt-24 px-4 overflow-hidden">
         {/* Background Portrait */}
         <div 
-          className="absolute inset-0 z-0 hero-bg-image"
+          className="absolute inset-0 z-0 hero-bg-image bg-contain md:bg-cover"
           style={{
             backgroundColor: '#ffffff',
             backgroundImage: 'url(/hero-portrait.png)',
@@ -141,9 +141,8 @@ export default function HomePage() {
                   className="absolute left-2 top-0"
                 >
                   <div className="bg-white/20 backdrop-blur-sm rounded-2xl px-3 py-2">
-                    <div className="text-black text-sm font-semibold tracking-wider font-['Urbanist'] leading-tight text-left">
-                      <div>Your Skin,</div>
-                      <div>Decoded.</div>
+                    <div className="text-black text-base font-semibold tracking-wider font-['Urbanist'] leading-tight text-left">
+                      Your Skin, Decoded.
                     </div>
                   </div>
                 </motion.div>
@@ -153,12 +152,11 @@ export default function HomePage() {
                   initial={{ opacity: 0, x: 20 }}
                   animate={heroInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 20 }}
                   transition={{ duration: 0.8, delay: 0.6 }}
-                  className="absolute right-2 top-0"
+                  className="absolute -right-4 top-0"
                 >
                   <div className="bg-white/20 backdrop-blur-sm rounded-2xl px-3 py-2">
-                    <div className="text-black text-sm font-semibold tracking-wider font-['Urbanist'] leading-tight text-right">
-                      <div>Your Routine,</div>
-                      <div>Perfected.</div>
+                    <div className="text-black text-base font-semibold tracking-wider font-['Urbanist'] leading-tight text-right">
+                      Your Routine, Perfected.
                     </div>
                   </div>
                 </motion.div>
@@ -178,8 +176,7 @@ export default function HomePage() {
                 >
                   <div className="bg-white/20 backdrop-blur-sm rounded-2xl px-4 py-3 md:px-6 md:py-4">
                     <div className="text-black text-base sm:text-lg md:text-xl font-semibold tracking-wider font-['Urbanist'] leading-tight text-left sm:text-center">
-                      <div>Your Skin,</div>
-                      <div>Decoded.</div>
+                      Your Skin, Decoded.
                     </div>
                   </div>
                 </motion.div>
@@ -193,8 +190,7 @@ export default function HomePage() {
                 >
                   <div className="bg-white/20 backdrop-blur-sm rounded-2xl px-4 py-3 md:px-6 md:py-4">
                     <div className="text-black text-base sm:text-lg md:text-xl font-semibold tracking-wider font-['Urbanist'] leading-tight text-right sm:text-center">
-                      <div>Your Routine,</div>
-                      <div>Perfected.</div>
+                      Your Routine, Perfected.
                     </div>
                   </div>
                 </motion.div>
@@ -246,7 +242,7 @@ export default function HomePage() {
                       playsInline
                       className="w-full h-full object-contain"
                     >
-                      <source src="/recommendations.mp4" type="video/mp4" />
+                      <source src="/screen-recording.mov" type="video/mp4" />
                     </video>
                   </div>
                   
@@ -306,7 +302,7 @@ export default function HomePage() {
             transition={{ duration: 0.8 }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl md:text-6xl font-bold text-[#FF7E7E]">Meet KLYM, Your AI Cosmetologist Expert</h2>
+            <h2 className="text-4xl md:text-6xl font-bold text-[#FF7E7E]">Meet KLYM<br />Your AI Cosmetologist Expert</h2>
           </motion.div>
 
           <div className="max-w-3xl mx-auto">
@@ -367,8 +363,8 @@ export default function HomePage() {
             <div className="flex gap-4 md:gap-8 justify-start md:justify-center items-center min-w-max pl-[50vw] md:pl-0 pr-4 md:pr-0 md:max-w-5xl md:mx-auto mobile-transform">
                 {[
                   { src: '/splash-screen.jpg', alt: 'Splash Screen' },
-                  { src: '/routine-tracker.jpg', alt: 'Routine Tracker' },
-                  { src: '/home-page.png', alt: 'Home Page' }
+                  { src: '/IMG_9281.PNG', alt: 'App Screen 2' },
+                  { src: '/IMG_9282.PNG', alt: 'App Screen 3' }
                 ].map(({ src, alt }, index) => {
                   return (
                   <motion.div
@@ -380,9 +376,9 @@ export default function HomePage() {
                     className="relative bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 rounded-[3rem] p-3 shadow-2xl flex-shrink-0 w-[280px] cursor-pointer"
                   >
                     {/* iPhone Frame Elements */}
-                    <div className="bg-black rounded-[2.5rem] overflow-hidden relative aspect-[9/19.5]">
+                    <div className="bg-gray-900 rounded-[2.5rem] overflow-hidden relative aspect-[9/19.5] border border-gray-800">
                       {/* Dynamic Island */}
-                      <div className="absolute top-3 left-1/2 transform -translate-x-1/2 w-24 h-6 bg-black rounded-full z-20">
+                      <div className="absolute top-3 left-1/2 transform -translate-x-1/2 w-24 h-6 bg-gray-900 rounded-full z-20">
                         <div className="absolute inset-1 bg-gray-900 rounded-full">
                           {/* Camera and sensors */}
                           <div className="absolute left-2 top-1/2 transform -translate-y-1/2 w-1 h-1 bg-gray-700 rounded-full"></div>
@@ -397,8 +393,8 @@ export default function HomePage() {
                         height={580}
                         className={`w-full h-full object-cover`}
                         style={{ 
-                          objectFit: index === 1 ? 'contain' : 'cover',
-                          transform: index === 1 ? 'scale(1.4) translateY(10%)' : 'none',
+                          objectFit: index === 1 ? 'cover' : 'cover',
+                          transform: index === 1 ? 'scale(1.0) translateY(0%)' : 'none',
                           transformOrigin: index === 1 ? 'center center' : 'center'
                         }}
                         priority={index === 1}
@@ -438,39 +434,39 @@ export default function HomePage() {
             animate={section5InView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
             transition={{ duration: 0.8 }}
           >
-            <h2 className="text-4xl md:text-6xl font-bold mb-8">Ready to Meet Your Best Skin?</h2>
+            <h2 className="text-4xl md:text-6xl font-bold mb-8 text-[#FF7E7E]">Ready to Meet Your Best Skin?</h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-16 leading-relaxed">
               No more guesswork. Scan your skin, discover your routine, unlock your healthiest glow.
             </p>
 
             {/* Trust Indicators */}
-            <div className="flex flex-col sm:flex-row sm:flex-wrap justify-center gap-4 sm:gap-12 mb-16">
+            <div className="flex flex-row flex-wrap justify-center gap-4 sm:gap-8 lg:gap-12 mb-16">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={section5InView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
-                className="flex items-center justify-center gap-3"
+                className="flex items-center justify-center gap-2 sm:gap-3"
               >
-                <Sparkles className="w-6 h-6 text-[#FF7E7E]" />
-                <span className="text-lg font-semibold">Dermatologist Approved</span>
+                <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-[#FF7E7E]" />
+                <span className="text-base sm:text-lg font-semibold">Dermatologist Approved</span>
               </motion.div>
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={section5InView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ duration: 0.6, delay: 0.3 }}
-                className="flex items-center justify-center gap-3"
+                className="flex items-center justify-center gap-2 sm:gap-3"
               >
-                <Sparkles className="w-6 h-6 text-[#FF7E7E]" />
-                <span className="text-lg font-semibold">Privacy Protected</span>
+                <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-[#FF7E7E]" />
+                <span className="text-base sm:text-lg font-semibold">Privacy Protected</span>
               </motion.div>
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={section5InView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ duration: 0.6, delay: 0.4 }}
-                className="flex items-center justify-center gap-3"
+                className="flex items-center justify-center gap-2 sm:gap-3"
               >
-                <Sparkles className="w-6 h-6 text-[#FF7E7E]" />
-                <span className="text-lg font-semibold">100% Free Analysis</span>
+                <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-[#FF7E7E]" />
+                <span className="text-base sm:text-lg font-semibold">100% Free Analysis</span>
               </motion.div>
             </div>
 
@@ -554,7 +550,7 @@ export default function HomePage() {
                   </a>
                   <a href="https://www.facebook.com/share/1B9hcPmwwX/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity">
                     <Image
-                      src="/facebook-logo.jpg"
+                      src="/facebook-logo-updated.svg"
                       alt="Facebook"
                       width={32}
                       height={32}
