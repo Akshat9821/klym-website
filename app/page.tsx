@@ -1,6 +1,6 @@
 "use client"
 
-import { motion, useScroll, useInView } from "framer-motion"
+import { motion, useScroll, useInView, useTransform, useSpring } from "framer-motion"
 import { useRef, useState, useEffect } from "react"
 import Image from "next/image"
 import Link from "next/link"
@@ -23,7 +23,29 @@ export default function HomePage() {
   const section4InView = useInView(section4Ref, { once: true, margin: "-100px" })
   const section5InView = useInView(section5Ref, { once: true, margin: "-100px" })
 
-  const [showAllChats, setShowAllChats] = useState(false)
+  const chatContainerRef = useRef(null)
+  const [chatAnimationComplete, setChatAnimationComplete] = useState(false)
+  const [isSection3Active, setIsSection3Active] = useState(false)
+  const [scrollPosition, setScrollPosition] = useState(0)
+  const [visibleMessageCount, setVisibleMessageCount] = useState(0)
+  
+  // Scroll progress for section 3
+  const { scrollYProgress: section3ScrollProgress } = useScroll({
+    target: section3Ref,
+    offset: ["start center", "end center"]
+  })
+
+  // Scroll progress for section 4 (Know Before You Glow)
+  const { scrollYProgress: section4ScrollProgress } = useScroll({
+    target: section4Ref,
+    offset: ["start 80%", "end 20%"]
+  })
+  const phone1Y = useTransform(section4ScrollProgress, [0, 1], [30, -10])
+  const phone2Y = useTransform(section4ScrollProgress, [0, 1], [50, -20])
+  const phone3Y = useTransform(section4ScrollProgress, [0, 1], [30, -10])
+  const phone1Rotate = useTransform(section4ScrollProgress, [0, 1], [-2, 0])
+  const phone2Rotate = useTransform(section4ScrollProgress, [0, 1], [0, 0])
+  const phone3Rotate = useTransform(section4ScrollProgress, [0, 1], [2, 0])
 
   const chatMessages = [
     {
@@ -73,20 +95,28 @@ export default function HomePage() {
     },
   ]
 
+  // Scroll hijacking effect - TEMPORARILY DISABLED FOR DEBUGGING
   useEffect(() => {
-    if (section3InView) {
-      const timer = setTimeout(() => {
-        setShowAllChats(true)
-      }, 500) // Small delay for smooth transition
-      return () => clearTimeout(timer)
+    // Temporarily disabled to debug scrolling issue
+    // TODO: Re-enable after fixing scroll problem
+    
+    // Set a demo message count for testing
+    setVisibleMessageCount(chatMessages.length)
+    setChatAnimationComplete(true)
+    
+    return () => {
+      // Ensure no scroll locks remain
+      document.body.style.position = ''
+      document.body.style.top = ''
+      document.body.style.width = ''
     }
-  }, [section3InView])
+  }, [chatMessages.length])
 
   return (
     <div className="min-h-screen bg-white text-black">
 
       {/* Hero Section - Scroll 1 */}
-<section ref={heroRef} className="relative min-h-screen flex items-start justify-center pt-16 md:pt-24 px-4 overflow-hidden">
+      <section ref={heroRef} className="relative min-h-screen flex items-start justify-center pt-16 md:pt-24 px-4 overflow-hidden">
         {/* Background Portrait */}
         <div 
           className="absolute inset-0 z-0 hero-bg-image bg-contain md:bg-cover"
@@ -103,7 +133,7 @@ export default function HomePage() {
           initial={{ opacity: 0, y: -30 }}
           animate={heroInView && heroStillVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: -30 }}
           transition={{ duration: 0.5 }}
-          className="fixed top-4 left-1/2 transform -translate-x-1/2 -ml-4 sm:-ml-8 z-50"
+          className="fixed top-4 left-1/2 transform -translate-x-1/2 -ml-10 sm:-ml-10 z-50"
         >
           <Image
             src="/klym-logo.png"
@@ -118,13 +148,13 @@ export default function HomePage() {
         
         <div className="relative z-20 container mx-auto max-w-6xl text-white">
           
-          	<motion.div
+          <motion.div
             initial={{ opacity: 0, y: 50 }}
             animate={heroInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
             transition={{ duration: 0.8 }}
             className="text-center mt-42 mb-8 ml-4"
           >
-            <h2 className="text-2xl md:text-3xl font-medium leading-tight max-w-3xl mx-auto text-black mb-12">
+            <h2 className="text-5xl md:text-7xl font-bold leading-tight max-w-3xl mx-auto text-black mb-12">
               AI-powered skincare<br /> that knows you
               better than you do.
             </h2>
@@ -138,7 +168,7 @@ export default function HomePage() {
                   initial={{ opacity: 0, x: -20 }}
                   animate={heroInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
                   transition={{ duration: 0.8, delay: 0.4 }}
-                  className="absolute left-2 top-0"
+                  className="absolute left-1 -top-10"
                 >
                   <div className="bg-white/20 backdrop-blur-sm rounded-2xl px-3 py-2">
                     <div className="text-black text-xs font-semibold tracking-wider font-['Urbanist'] leading-tight text-left">
@@ -152,7 +182,7 @@ export default function HomePage() {
                   initial={{ opacity: 0, x: 20 }}
                   animate={heroInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 20 }}
                   transition={{ duration: 0.8, delay: 0.6 }}
-                  className="absolute -right-4 top-0"
+                  className="absolute -right-1 -top-10"
                 >
                   <div className="bg-white/20 backdrop-blur-sm rounded-2xl px-3 py-2">
                     <div className="text-black text-xs font-semibold tracking-wider font-['Urbanist'] leading-tight text-right">
@@ -209,7 +239,7 @@ export default function HomePage() {
             transition={{ duration: 0.8 }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl md:text-6xl font-bold mb-8 text-[#FF7E7E]">Guessing Games End Here</h2>
+            <h2 className="text-4xl md:text-6xl font-bold mb-8 text-black">Guessing Games End Here</h2>
           </motion.div>
 
           <div className="grid lg:grid-cols-2 gap-16 items-center max-w-6xl mx-auto">
@@ -293,8 +323,14 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Section 3 - Meet KLYM Chat Interface */}
-      <section ref={section3Ref} className="py-20">
+      {/* Section 3 - Meet KLYM Chat Interface with Scroll Animation */}
+      <section ref={section3Ref} className="pt-20 pb-8 md:pb-20 min-h-screen relative">
+        {/* Section-wide background underlay */}
+        <div
+          aria-hidden
+          className="absolute inset-0 -z-10 bg-no-repeat bg-cover bg-center opacity-10 md:opacity-20 pointer-events-none"
+          style={{ backgroundImage: "url(/chat-underlay.jpg)" }}
+        />
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
@@ -302,42 +338,137 @@ export default function HomePage() {
             transition={{ duration: 0.8 }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl md:text-6xl font-bold text-[#FF7E7E]">Meet KLYM<br />Your AI Cosmetologist Expert</h2>
+            <h2 className="text-3xl md:text-6xl font-bold text-[#FF7E7E]">
+              <span className="block">Meet KLYM</span>
+              <span className="block text-2xl md:text-5xl leading-tight md:leading-tight whitespace-nowrap sm:whitespace-normal">
+                Your AI Cosmetologist Expert
+              </span>
+            </h2>
           </motion.div>
 
-          <div className="max-w-3xl mx-auto">
-            <div className="rounded-3xl p-8 min-h-[600px]">
+          <div className="max-w-3xl mx-auto" ref={chatContainerRef}>
+            <div className="rounded-3xl p-8 min-h-[800px] relative">
               <div className="space-y-6">
-                {showAllChats && chatMessages.map((msg, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, y: 20, scale: 0.95 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                    className={`flex ${msg.type === "ai" ? "justify-start" : "justify-end"}`}
-                  >
-                    <div
-                      className={`max-w-xs md:max-w-md px-6 py-4 rounded-2xl ${
-                        msg.type === "ai"
-                          ? "bg-white text-black rounded-bl-md shadow-sm"
-                          : "bg-[#FF7E7E] text-white rounded-br-md"
-                      }`}
+                {chatMessages.slice(0, visibleMessageCount).map((msg, index) => {
+                  return (
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, scale: 0.8, y: 50 }}
+                      animate={{ opacity: 1, scale: 1, y: 0 }}
+                      transition={{ 
+                        duration: 0.6, 
+                        ease: "easeOut",
+                        type: "spring",
+                        stiffness: 300,
+                        damping: 20
+                      }}
+                      className={`flex ${msg.type === "ai" ? "justify-start" : "justify-end"}`}
                     >
-                      <p className="text-sm leading-relaxed whitespace-pre-line">{msg.message}</p>
-                      <p className={`text-xs mt-2 ${msg.type === "ai" ? "text-gray-500" : "text-white/80"}`}>
-                        {msg.type === "ai" ? "KLYM AI" : "Ananya"}
-                      </p>
-                    </div>
-                  </motion.div>
-                ))}
+                      <motion.div
+                        className={`max-w-xs md:max-w-md px-6 py-4 rounded-2xl chat-bubble ${
+                          msg.type === "ai"
+                            ? "bg-white text-black rounded-bl-md shadow-lg border border-gray-100 chat-bubble-ai"
+                            : "bg-[#FF7E7E] text-white rounded-br-md shadow-lg chat-bubble-user"
+                        }`}
+                        whileHover={{ scale: 1.02, y: -2 }}
+                        transition={{ type: "spring", stiffness: 300 }}
+                      >
+                        <p className="text-sm leading-relaxed whitespace-pre-line">{msg.message}</p>
+                        <p className={`text-xs mt-2 ${msg.type === "ai" ? "text-gray-500" : "text-white/80"}`}>
+                          {msg.type === "ai" ? "KLYM AI" : "Ananya"}
+                        </p>
+                        
+                        {/* Typing indicator effect for AI messages */}
+                        {msg.type === "ai" && (
+                          <motion.div
+                            className="flex gap-1 mt-2"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ delay: 0.5 }}
+                          >
+                            <motion.div
+                              className="w-2 h-2 bg-[#FF7E7E] rounded-full"
+                              animate={{ scale: [1, 1.2, 1] }}
+                              transition={{ duration: 1, repeat: Infinity, delay: 0 }}
+                            />
+                            <motion.div
+                              className="w-2 h-2 bg-[#FF7E7E] rounded-full"
+                              animate={{ scale: [1, 1.2, 1] }}
+                              transition={{ duration: 1, repeat: Infinity, delay: 0.2 }}
+                            />
+                            <motion.div
+                              className="w-2 h-2 bg-[#FF7E7E] rounded-full"
+                              animate={{ scale: [1, 1.2, 1] }}
+                              transition={{ duration: 1, repeat: Infinity, delay: 0.4 }}
+                            />
+                          </motion.div>
+                        )}
+                      </motion.div>
+                    </motion.div>
+                  )
+                })}
               </div>
+
+              {/* Chat completion indicator */}
+              {chatAnimationComplete && (
+                <motion.div
+                  className="text-center mt-8 md:mt-16"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.5 }}
+                >
+                <motion.div
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-[#FF7E7E] to-[#FF9999] text-white rounded-full shadow-lg"
+                  animate={{
+                    scale: [1, 1.05, 1],
+                    boxShadow: [
+                      "0 4px 15px rgba(255, 126, 126, 0.2)",
+                      "0 8px 25px rgba(255, 126, 126, 0.4)",
+                      "0 4px 15px rgba(255, 126, 126, 0.2)"
+                    ]
+                  }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                >
+                  <span className="text-sm font-semibold">Chat Complete - Ready for Next Step</span>
+                  <motion.div
+                    animate={{ x: [0, 3, 0] }}
+                    transition={{ duration: 1.5, repeat: Infinity }}
+                  >
+                    →
+                  </motion.div>
+                </motion.div>
+                </motion.div>
+              )}
             </div>
           </div>
         </div>
+        
+        {/* Scroll progress indicator */}
+        <motion.div
+          className="fixed right-8 top-1/2 transform -translate-y-1/2 w-1 h-32 bg-gray-200 rounded-full overflow-hidden z-50"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: section3InView ? 1 : 0 }}
+        >
+          <motion.div
+            className="w-full bg-gradient-to-b from-[#FF7E7E] to-[#FF9999] rounded-full origin-top"
+            style={{
+              scaleY: section3ScrollProgress,
+              height: "100%"
+            }}
+          />
+        </motion.div>
       </section>
 
-      {/* Section 4 - Know Before You Glow */}
-      <section ref={section4Ref} className="py-20 bg-gray-50">
+      {/* Section 4 - Know Before You Glow - Only shows when chat animation is near completion */}
+      <motion.section 
+        ref={section4Ref} 
+        className="pt-10 md:pt-20 pb-20 bg-gray-50"
+        initial={{ opacity: 0 }}
+        style={{
+          opacity: useTransform(section3ScrollProgress, [0.7, 0.85], [0, 1]),
+          pointerEvents: useTransform(section3ScrollProgress, [0.7, 0.85], ["none", "auto"])
+        }}
+      >
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
@@ -345,7 +476,7 @@ export default function HomePage() {
             transition={{ duration: 0.8 }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl md:text-6xl font-bold mb-8 text-[#FF7E7E]">Know Before You Glow</h2>
+            <h2 className="text-4xl md:text-6xl font-bold mb-8 text-black">Know Before You Glow</h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
               Understand product compatibility with your skin using KLYM's Fitment Scores. First time in India:
               Transparent, personalized skincare recommendations.
@@ -373,6 +504,10 @@ export default function HomePage() {
                     animate={section4InView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
                     transition={{ duration: 0.8, delay: 0.2 + (0.15 * index), ease: "easeOut" }}
                     whileHover={{ scale: 1.02, y: -5 }}
+                    style={{
+                      y: index === 0 ? phone1Y : index === 1 ? phone2Y : phone3Y,
+                      rotate: index === 0 ? phone1Rotate : index === 1 ? phone2Rotate : phone3Rotate,
+                    }}
                     className="relative bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 rounded-[3rem] p-3 shadow-2xl flex-shrink-0 w-[280px] cursor-pointer"
                   >
                     {/* iPhone Frame Elements */}
@@ -424,7 +559,7 @@ export default function HomePage() {
             </div>
           </motion.div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Section 5 - Ready to Meet Your Best Skin */}
       <section ref={section5Ref} className="py-20">
@@ -434,39 +569,39 @@ export default function HomePage() {
             animate={section5InView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
             transition={{ duration: 0.8 }}
           >
-            <h2 className="text-4xl md:text-6xl font-bold mb-8 text-[#FF7E7E]">Ready to Meet Your Best Skin?</h2>
+            <h2 className="text-4xl md:text-6xl font-bold mb-8 text-black">Ready to Meet Your Best Skin?</h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-16 leading-relaxed">
               No more guesswork. Scan your skin, discover your routine, unlock your healthiest glow.
             </p>
 
             {/* Trust Indicators */}
-            <div className="flex flex-row flex-wrap justify-center gap-4 sm:gap-8 lg:gap-12 mb-16">
+            <div className="flex flex-row flex-nowrap items-center justify-between gap-1 sm:gap-8 lg:gap-12 mb-6 w-full px-1">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={section5InView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
-                className="flex items-center justify-center gap-2 sm:gap-3"
+                className="flex items-center justify-center gap-2 sm:gap-3 w-auto"
               >
-                <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-[#FF7E7E]" />
-                <span className="text-base sm:text-lg font-semibold">Dermatologist Approved</span>
+                <Sparkles className="w-3 h-3 sm:w-7 sm:h-7 text-[#FF7E7E]" />
+                <span className="text-[11px] sm:text-xl font-semibold whitespace-nowrap tracking-tight">Dermatologist Approved</span>
               </motion.div>
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={section5InView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ duration: 0.6, delay: 0.3 }}
-                className="flex items-center justify-center gap-2 sm:gap-3"
+                className="flex items-center justify-center gap-2 sm:gap-3 w-auto"
               >
-                <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-[#FF7E7E]" />
-                <span className="text-base sm:text-lg font-semibold">Privacy Protected</span>
+                <Sparkles className="w-3 h-3 sm:w-7 sm:h-7 text-[#FF7E7E]" />
+                <span className="text-[11px] sm:text-xl font-semibold whitespace-nowrap tracking-tight">Privacy Protected</span>
               </motion.div>
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={section5InView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ duration: 0.6, delay: 0.4 }}
-                className="flex items-center justify-center gap-2 sm:gap-3"
+                className="flex items-center justify-center gap-2 sm:gap-3 w-auto"
               >
-                <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-[#FF7E7E]" />
-                <span className="text-base sm:text-lg font-semibold">100% Free Analysis</span>
+                <Sparkles className="w-3 h-3 sm:w-7 sm:h-7 text-[#FF7E7E]" />
+                <span className="text-[11px] sm:text-xl font-semibold whitespace-nowrap tracking-tight">100% Free Analysis</span>
               </motion.div>
             </div>
 
@@ -475,30 +610,30 @@ export default function HomePage() {
               initial={{ opacity: 0, y: 30 }}
               animate={section5InView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
               transition={{ duration: 0.8, delay: 0.6 }}
-              className="flex flex-row gap-4 sm:gap-6 justify-center items-center flex-wrap"
+              className="grid grid-cols-2 gap-3 sm:gap-6 justify-center items-center w-full max-w-sm mx-auto mt-2 sm:mt-14"
             >
               <Button 
                 asChild
-                className="flex items-center gap-3 px-8 py-4 bg-[#FF7E7E] hover:bg-[#FF7E7E]/90 text-white text-lg rounded-xl"
+                className="flex items-center justify-center gap-2 px-3 py-2 bg-[#FF7E7E] hover:bg-[#FF7E7E]/90 text-white text-sm sm:text-lg rounded-xl w-full"
               >
                 <a 
                   href="https://apps.apple.com/in/app/klym/id6748438143" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="flex items-center gap-3"
+                  className="flex items-center gap-2"
                 >
                   Download for iOS
                 </a>
               </Button>
               <Button 
                 asChild
-                className="flex items-center gap-3 px-8 py-4 bg-[#FF7E7E] hover:bg-[#FF7E7E]/90 text-white text-lg rounded-xl"
+                className="flex items-center justify-center gap-2 px-3 py-2 bg-[#FF7E7E] hover:bg-[#FF7E7E]/90 text-white text-sm sm:text-lg rounded-xl w-full"
               >
                 <a 
                   href="https://play.google.com/store/apps/details?id=com.gramai.klym&pcampaignid=web_share" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="flex items-center gap-3"
+                  className="flex items-center gap-2"
                 >
                   Download on Android
                 </a>
@@ -537,33 +672,32 @@ export default function HomePage() {
             </div>
             <div className="flex-1 flex justify-end">
               <div className="text-right">
-                <p className="text-gray-400 mb-4 text-lg">Follow us on:</p>
-                <div className="flex gap-4">
+                <div className="flex gap-2 sm:gap-3 md:gap-6">
                   <a href="https://www.instagram.com/klym_life?igsh=MWNsdzd6eXM0cGNrMQ==" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity">
                     <Image
                       src="/instagram-logo.png"
                       alt="Instagram"
-                      width={32}
-                      height={32}
-                      className="w-6 h-6 md:w-8 md:h-8 object-contain"
+                      width={64}
+                      height={64}
+                      className="w-12 h-12 md:w-14 md:h-14 object-contain"
                     />
                   </a>
                   <a href="https://www.facebook.com/share/1B9hcPmwwX/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity">
                     <Image
                       src="/facebook-logo-updated.svg"
                       alt="Facebook"
-                      width={32}
-                      height={32}
-                      className="w-6 h-6 md:w-8 md:h-8 object-contain"
+                      width={64}
+                      height={64}
+                      className="w-12 h-12 md:w-14 md:h-14 object-contain"
                     />
                   </a>
                   <a href="https://www.linkedin.com/company/klym-life/posts/?feedView=all" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity">
                     <Image
                       src="/linkedin-logo.png"
                       alt="LinkedIn"
-                      width={32}
-                      height={32}
-                      className="w-6 h-6 md:w-8 md:h-8 object-contain"
+                      width={64}
+                      height={64}
+                      className="w-12 h-12 md:w-14 md:h-14 object-contain"
                     />
                   </a>
                 </div>

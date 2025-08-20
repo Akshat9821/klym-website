@@ -126,6 +126,33 @@ html {
   animation: fadeInUp 0.5s ease-out;
 }
 
+/* Chat bubble tails */
+.chat-bubble {
+  position: relative;
+}
+.chat-bubble-ai::after {
+  content: "";
+  position: absolute;
+  top: -8px;
+  left: 24px;
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 8px solid #ffffff; /* matches AI bubble background */
+}
+.chat-bubble-user::after {
+  content: "";
+  position: absolute;
+  bottom: -8px;
+  right: 24px;
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 8px solid #FF7E7E; /* matches user bubble background */
+}
+
 /* Mobile transform for iPhone screens */
 .mobile-transform {
   transform: translateX(-140px);
@@ -162,7 +189,7 @@ html {
 
 @media (min-width: 769px) {
   .hero-bg-image {
-    background-size: 40% !important;
+    background-size: 45% !important;
     background-position: bottom center !important;
   }
 }
