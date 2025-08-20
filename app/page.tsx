@@ -133,7 +133,7 @@ export default function HomePage() {
           initial={{ opacity: 0, y: -30 }}
           animate={heroInView && heroStillVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: -30 }}
           transition={{ duration: 0.5 }}
-          className="fixed top-4 left-1/2 transform -translate-x-1/2 -ml-10 sm:-ml-10 z-50"
+          className="fixed top-4 left-1/2 transform -translate-x-1/2 -ml-12 sm:-ml-12 z-50"
         >
           <Image
             src="/klym-logo.png"
@@ -155,8 +155,8 @@ export default function HomePage() {
             className="text-center mt-42 mb-8 ml-4"
           >
             <h2 className="text-2xl sm:text-4xl md:text-6xl font-bold leading-tight max-w-3xl mx-auto text-black mb-12">
-              <span className="block md:inline">AI-powered skincare</span>
-              <span className="block md:inline md:ml-2">that knows you better than you do.</span>
+              <span className="block">AI-powered skincare</span>
+              <span className="block">that knows you better than you do.</span>
             </h2>
             
             {/* Side texts positioned below center text */}
@@ -338,9 +338,9 @@ export default function HomePage() {
             transition={{ duration: 0.8 }}
             className="text-center mb-16"
           >
-            <h2 className="text-2xl sm:text-4xl md:text-6xl font-bold text-[#FF7E7E]">
+            <h2 className="text-3xl sm:text-5xl md:text-7xl font-bold text-[#FF7E7E]">
               <span className="block">Meet KLYM</span>
-              <span className="block text-xl sm:text-3xl md:text-5xl leading-tight md:leading-tight whitespace-nowrap sm:whitespace-normal">
+              <span className="block text-2xl sm:text-4xl md:text-6xl leading-tight md:leading-tight whitespace-nowrap sm:whitespace-normal">
                 Your AI Cosmetologist Expert
               </span>
             </h2>
