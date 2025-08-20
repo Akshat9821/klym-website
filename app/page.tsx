@@ -154,9 +154,9 @@ export default function HomePage() {
             transition={{ duration: 0.8 }}
             className="text-center mt-42 mb-8 ml-4"
           >
-            <h2 className="text-5xl md:text-7xl font-bold leading-tight max-w-3xl mx-auto text-black mb-12">
-              AI-powered skincare<br /> that knows you
-              better than you do.
+            <h2 className="text-2xl sm:text-4xl md:text-6xl font-bold leading-tight max-w-3xl mx-auto text-black mb-12">
+              <span className="block md:inline">AI-powered skincare</span>
+              <span className="block md:inline md:ml-2">that knows you better than you do.</span>
             </h2>
             
             {/* Side texts positioned below center text */}
@@ -239,7 +239,7 @@ export default function HomePage() {
             transition={{ duration: 0.8 }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl md:text-6xl font-bold mb-8 text-black">Guessing Games End Here</h2>
+            <h2 className="text-2xl sm:text-4xl md:text-6xl font-bold mb-8 text-black whitespace-nowrap leading-snug tracking-tight">Guessing Games End Here</h2>
           </motion.div>
 
           <div className="grid lg:grid-cols-2 gap-16 items-center max-w-6xl mx-auto">
@@ -338,9 +338,9 @@ export default function HomePage() {
             transition={{ duration: 0.8 }}
             className="text-center mb-16"
           >
-            <h2 className="text-3xl md:text-6xl font-bold text-[#FF7E7E]">
+            <h2 className="text-2xl sm:text-4xl md:text-6xl font-bold text-[#FF7E7E]">
               <span className="block">Meet KLYM</span>
-              <span className="block text-2xl md:text-5xl leading-tight md:leading-tight whitespace-nowrap sm:whitespace-normal">
+              <span className="block text-xl sm:text-3xl md:text-5xl leading-tight md:leading-tight whitespace-nowrap sm:whitespace-normal">
                 Your AI Cosmetologist Expert
               </span>
             </h2>
