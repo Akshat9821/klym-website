@@ -85,25 +85,7 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Custom scrollbar for horizontal sections */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
 
-::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #ff7e7e;
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #ff6b6b;
-}
 
 /* Smooth animations */
 * {
@@ -162,6 +144,42 @@ html {
   .mobile-transform {
     transform: none;
   }
+}
+
+/* Hide scrollbars only for phone screens section */
+.phone-screens-scroll::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+.phone-screens-scroll::-webkit-scrollbar-track {
+  display: none !important;
+}
+
+.phone-screens-scroll::-webkit-scrollbar-thumb {
+  display: none !important;
+}
+
+/* Firefox scrollbar hiding */
+.phone-screens-scroll {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+/* Additional strong scrollbar hiding for phone screens */
+.phone-screens-scroll.overflow-x-auto::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+.phone-screens-scroll.overflow-x-auto::-webkit-scrollbar-track {
+  display: none !important;
+}
+
+.phone-screens-scroll.overflow-x-auto::-webkit-scrollbar-thumb {
+  display: none !important;
 }
 
 /* Responsive typography */

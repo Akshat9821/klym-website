@@ -140,7 +140,7 @@ export default function HomePage() {
             alt="KLYM logo"
             width={120}
             height={40}
-            className="h-10 w-auto sm:h-18"
+            className="h-10 w-auto sm:h-12 md:h-14 object-contain"
             priority
           />
         </motion.div>
@@ -163,68 +163,13 @@ export default function HomePage() {
             <div className="relative mt-8 px-4 sm:px-0">
               {/* Mobile (xs) — pin the badges to left/right so they don't drift */}
               <div className="block sm:hidden relative">
-                {/* Left badge */}
-                <motion.div
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={heroInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
-                  transition={{ duration: 0.8, delay: 0.4 }}
-                  className="absolute left-1 -top-10"
-                >
-                  <div className="bg-white/20 backdrop-blur-sm rounded-2xl px-3 py-2">
-                    <div className="text-black text-xs font-semibold tracking-wider font-['Urbanist'] leading-tight text-left">
-                      Your Skin, Decoded.
-                    </div>
-                  </div>
-                </motion.div>
 
-                {/* Right badge */}
-                <motion.div
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={heroInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 20 }}
-                  transition={{ duration: 0.8, delay: 0.6 }}
-                  className="absolute -right-1 -top-10"
-                >
-                  <div className="bg-white/20 backdrop-blur-sm rounded-2xl px-3 py-2">
-                    <div className="text-black text-xs font-semibold tracking-wider font-['Urbanist'] leading-tight text-right">
-                      Your Routine, Perfected.
-                    </div>
-                  </div>
-                </motion.div>
 
                 {/* Spacer so the absolute badges don't overlap following content */}
                 <div className="h-20"></div>
               </div>
 
-              {/* >= sm — keep the original desktop/tablet layout */}
-              <div className="hidden sm:flex justify-between items-stretch gap-8">
-                {/* YOUR SKIN, DECODED - Left aligned */}
-                <motion.div
-                  initial={{ opacity: 0, x: -30 }}
-                  animate={heroInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
-                  transition={{ duration: 0.8, delay: 0.4 }}
-                  className="flex justify-start"
-                >
-                  <div className="bg-white/20 backdrop-blur-sm rounded-2xl px-4 py-3 md:px-6 md:py-4">
-                    <div className="text-black text-base sm:text-lg md:text-xl font-semibold tracking-wider font-['Urbanist'] leading-tight text-left sm:text-center">
-                      Your Skin, Decoded.
-                    </div>
-                  </div>
-                </motion.div>
 
-                {/* YOUR ROUTINE, PERFECTED - Right aligned */}
-                <motion.div
-                  initial={{ opacity: 0, x: 30 }}
-                  animate={heroInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 30 }}
-                  transition={{ duration: 0.8, delay: 0.6 }}
-                  className="flex justify-end"
-                >
-                  <div className="bg-white/20 backdrop-blur-sm rounded-2xl px-4 py-3 md:px-6 md:py-4">
-                    <div className="text-black text-base sm:text-lg md:text-xl font-semibold tracking-wider font-['Urbanist'] leading-tight text-right sm:text-center">
-                      Your Routine, Perfected.
-                    </div>
-                  </div>
-                </motion.div>
-              </div>
             </div>
           </motion.div>
         </div>
@@ -303,7 +248,7 @@ export default function HomePage() {
               transition={{ duration: 0.8, delay: 0.4 }}
               className="space-y-8"
             >
-              <h3 className="text-2xl md:text-3xl font-semibold leading-relaxed">
+              <h3 className="text-lg md:text-xl font-semibold leading-relaxed">
                 Snap a selfie, get instant clarity. KLYM's AI scans your skin across 17+ parameters like hydration,
                 texture, acne, and more.
               </h3>
@@ -378,85 +323,19 @@ export default function HomePage() {
                           {msg.type === "ai" ? "KLYM AI" : "Ananya"}
                         </p>
                         
-                        {/* Typing indicator effect for AI messages */}
-                        {msg.type === "ai" && (
-                          <motion.div
-                            className="flex gap-1 mt-2"
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ delay: 0.5 }}
-                          >
-                            <motion.div
-                              className="w-2 h-2 bg-[#FF7E7E] rounded-full"
-                              animate={{ scale: [1, 1.2, 1] }}
-                              transition={{ duration: 1, repeat: Infinity, delay: 0 }}
-                            />
-                            <motion.div
-                              className="w-2 h-2 bg-[#FF7E7E] rounded-full"
-                              animate={{ scale: [1, 1.2, 1] }}
-                              transition={{ duration: 1, repeat: Infinity, delay: 0.2 }}
-                            />
-                            <motion.div
-                              className="w-2 h-2 bg-[#FF7E7E] rounded-full"
-                              animate={{ scale: [1, 1.2, 1] }}
-                              transition={{ duration: 1, repeat: Infinity, delay: 0.4 }}
-                            />
-                          </motion.div>
-                        )}
+
                       </motion.div>
                     </motion.div>
                   )
                 })}
               </div>
 
-              {/* Chat completion indicator */}
-              {chatAnimationComplete && (
-                <motion.div
-                  className="text-center mt-8 md:mt-16"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.5 }}
-                >
-                <motion.div
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-[#FF7E7E] to-[#FF9999] text-white rounded-full shadow-lg"
-                  animate={{
-                    scale: [1, 1.05, 1],
-                    boxShadow: [
-                      "0 4px 15px rgba(255, 126, 126, 0.2)",
-                      "0 8px 25px rgba(255, 126, 126, 0.4)",
-                      "0 4px 15px rgba(255, 126, 126, 0.2)"
-                    ]
-                  }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                >
-                  <span className="text-sm font-semibold">Chat Complete - Ready for Next Step</span>
-                  <motion.div
-                    animate={{ x: [0, 3, 0] }}
-                    transition={{ duration: 1.5, repeat: Infinity }}
-                  >
-                    →
-                  </motion.div>
-                </motion.div>
-                </motion.div>
-              )}
+
             </div>
           </div>
         </div>
         
-        {/* Scroll progress indicator */}
-        <motion.div
-          className="fixed right-8 top-1/2 transform -translate-y-1/2 w-1 h-32 bg-gray-200 rounded-full overflow-hidden z-50"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: section3InView ? 1 : 0 }}
-        >
-          <motion.div
-            className="w-full bg-gradient-to-b from-[#FF7E7E] to-[#FF9999] rounded-full origin-top"
-            style={{
-              scaleY: section3ScrollProgress,
-              height: "100%"
-            }}
-          />
-        </motion.div>
+
       </section>
 
       {/* Section 4 - Know Before You Glow - Only shows when chat animation is near completion */}
@@ -488,10 +367,10 @@ export default function HomePage() {
             initial={{ opacity: 0 }}
             animate={section4InView ? { opacity: 1 } : { opacity: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="w-full overflow-x-auto scrollbar-hide"
-            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+            className="w-full"
           >
-            <div className="flex gap-4 md:gap-8 justify-start md:justify-center items-center min-w-max pl-[50vw] md:pl-0 pr-4 md:pr-0 md:max-w-5xl md:mx-auto mobile-transform">
+            <div className="w-full overflow-x-auto overflow-y-hidden scroll-smooth phone-screens-scroll" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch' }}>
+              <div className="flex gap-4 md:gap-8 justify-start md:justify-center items-center min-w-max px-4 md:px-8 md:max-w-5xl md:mx-auto py-4">
                 {[
                   { src: '/splash-screen.jpg', alt: 'Splash Screen' },
                   { src: '/IMG_9281.PNG', alt: 'App Screen 2' },
@@ -543,7 +422,7 @@ export default function HomePage() {
                     {/* Side Buttons */}
                     <div className="absolute left-0 top-20 w-1 h-10 bg-gray-700 rounded-r-sm"></div>
                     <div className="absolute left-0 top-32 w-1 h-7 bg-gray-700 rounded-r-sm"></div>
-                    <div className="absolute left-0 top-42 w-1 h-7 bg-gray-700 rounded-r-sm"></div>
+                    <div className="absolute left-0 top-48 w-1 h-7 bg-gray-700 rounded-r-sm"></div>
                     
                     {/* Power Button */}
                     <div className="absolute right-0 top-28 w-1 h-14 bg-gray-700 rounded-l-sm"></div>
@@ -556,6 +435,7 @@ export default function HomePage() {
                   </motion.div>
                 )
                 })}
+              </div>
             </div>
           </motion.div>
         </div>
@@ -646,20 +526,20 @@ export default function HomePage() {
       {/* Footer */}
       <footer className="bg-gray-900 text-white py-16">
         <div className="container mx-auto px-4">
-          <div className="flex flex-row flex-wrap justify-center items-center gap-4 sm:gap-8 mb-8 text-lg">
-            <a href="#" className="hover:text-[#FF7E7E] transition-colors text-center">
+          <div className="flex flex-row justify-center items-center gap-2 sm:gap-4 md:gap-8 mb-8 text-sm sm:text-base md:text-lg overflow-x-auto">
+            <a href="#" className="hover:text-[#FF7E7E] transition-colors text-center whitespace-nowrap">
               About Us
             </a>
-            <Link href="/privacy-policy" className="hover:text-[#FF7E7E] transition-colors text-center">
+            <Link href="/privacy-policy" className="hover:text-[#FF7E7E] transition-colors text-center whitespace-nowrap">
               Privacy Policy
             </Link>
-            <Link href="/terms-of-use" className="hover:text-[#FF7E7E] transition-colors text-center">
+            <Link href="/terms-of-use" className="hover:text-[#FF7E7E] transition-colors text-center whitespace-nowrap">
               Terms of Use
             </Link>
-            <Link href="/user-privacy-choices" className="hover:text-[#FF7E7E] transition-colors text-center">
+            <Link href="/user-privacy-choices" className="hover:text-[#FF7E7E] transition-colors text-center whitespace-nowrap">
               User Privacy Choices
             </Link>
-            <Link href="/support" className="hover:text-[#FF7E7E] transition-colors text-center">
+            <Link href="/support" className="hover:text-[#FF7E7E] transition-colors text-center whitespace-nowrap">
               Support
             </Link>
           </div>
@@ -668,36 +548,36 @@ export default function HomePage() {
           <div className="flex justify-between items-center mb-8">
             <div className="flex-1"></div>
             <div className="text-center text-gray-400">
-              <p>&copy; 2025 KLYM. All rights reserved.</p>
+              <p className="text-sm sm:text-base">&copy; 2025 KLYM. All rights reserved.</p>
             </div>
             <div className="flex-1 flex justify-end">
               <div className="text-right">
-                <div className="flex gap-2 sm:gap-3 md:gap-6">
-                  <a href="https://www.instagram.com/klym_life?igsh=MWNsdzd6eXM0cGNrMQ==" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity">
+                <div className="flex gap-2 sm:gap-3 md:gap-4 justify-end items-center">
+                  <a href="https://www.instagram.com/klym_life?igsh=MWNsdzd6eXM0cGNrMQ==" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity group">
                     <Image
                       src="/instagram-logo.png"
                       alt="Instagram"
-                      width={64}
-                      height={64}
-                      className="w-12 h-12 md:w-14 md:h-14 object-contain"
+                      width={48}
+                      height={48}
+                      className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 object-contain transition-transform group-hover:scale-110"
                     />
                   </a>
-                  <a href="https://www.facebook.com/share/1B9hcPmwwX/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity">
+                  <a href="https://www.facebook.com/share/1B9hcPmwwX/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity group">
                     <Image
                       src="/facebook-logo-updated.svg"
                       alt="Facebook"
-                      width={64}
-                      height={64}
-                      className="w-12 h-12 md:w-14 md:h-14 object-contain"
+                      width={40}
+                      height={40}
+                      className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 object-contain transition-transform group-hover:scale-110"
                     />
                   </a>
-                  <a href="https://www.linkedin.com/company/klym-life/posts/?feedView=all" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity">
+                  <a href="https://www.linkedin.com/company/klym-life/posts/?feedView=all" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity group">
                     <Image
                       src="/linkedin-logo.png"
                       alt="LinkedIn"
-                      width={64}
-                      height={64}
-                      className="w-12 h-12 md:w-14 md:h-14 object-contain"
+                      width={48}
+                      height={48}
+                      className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 object-contain transition-transform group-hover:scale-110"
                     />
                   </a>
                 </div>
